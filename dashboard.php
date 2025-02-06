@@ -1,3 +1,11 @@
+<?php
+    session_start();
+
+    if(!isset($_SESSION['user'])) {
+        header('location:login.php');
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,7 +23,7 @@
             <div class="px-4">
                 <div class="flex items-center justify-between">
                     <div class="flex shrink-0">
-                        <a aria-current="page" class="flex items-center" href="/">
+                        <a aria-current="page" class="flex items-center" href="dashboard.php">
                             <svg class="w-6 h-6 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                                 <path fill-rule="evenodd" d="M6 2a2 2 0 0 0-2 2v15a3 3 0 0 0 3 3h12a1 1 0 1 0 0-2h-2v-2h2a1 1 0 0 0 1-1V4a2 2 0 0 0-2-2h-8v16h5v2H7a1 1 0 1 1 0-2h1V2H6Z" clip-rule="evenodd"/>
                             </svg>                              
@@ -35,8 +43,8 @@
                             </svg>
                         </button>
 
-                        <button id="userMenuButton" class="flex items-center justify-center rounded-xl bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-                            User
+                        <button id="userMenuButton" class="flex items-center justify-center rounded-xl bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 cursor-pointer">
+                            <?php echo $_SESSION['user']['username'] ?>
                         </button>
                     </div>
                 </div>
@@ -53,7 +61,7 @@
             <!-- User Dropdown Menu -->
             <div id="userDropdown" class="hidden absolute right-2 mr-3 transition-all duration-300 ease-out">
                 <div class="py-1">
-                    <a href="#" class="block rounded-xl bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500">Logout</a>
+                    <a href="backend/logout.php" class="block rounded-xl bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500">Logout</a>
                 </div>
             </div>
         </header>
@@ -89,195 +97,6 @@
                 </a>
             </div>
 
-            <div class="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
-                <a href="#">
-                    <img src="image/pyschologyofmoney.jpg"
-                        alt="Product" class="h-60 w-72 object-cover rounded-t-xl" />
-                    <div class="px-4 py-3 w-72">
-                        <span class="text-gray-400 mr-3 text-xs">author</span>
-                        <p class="text-xl font-bold text-black truncate block capitalize">Book Name</p>
-                        <p class="text-sm text-black">published</p>
-                        <div class="flex items-center">
-                            <p class="text-md my-3">149 Page</p>
-                            <div class="ml-auto"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                    fill="currentColor" class="bi bi-bag-plus" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd"
-                                        d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5z" />
-                                    <path
-                                        d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
-                                </svg></div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
-                <a href="#">
-                    <img src="image/pyschologyofmoney.jpg"
-                        alt="Product" class="h-60 w-72 object-cover rounded-t-xl" />
-                    <div class="px-4 py-3 w-72">
-                        <span class="text-gray-400 mr-3 text-xs">author</span>
-                        <p class="text-xl font-bold text-black truncate block capitalize">Book Name</p>
-                        <p class="text-sm text-black">published</p>
-                        <div class="flex items-center">
-                            <p class="text-md my-3">149 Page</p>
-                            <div class="ml-auto"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                    fill="currentColor" class="bi bi-bag-plus" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd"
-                                        d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5z" />
-                                    <path
-                                        d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
-                                </svg></div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
-                <a href="#">
-                    <img src="image/pyschologyofmoney.jpg"
-                        alt="Product" class="h-60 w-72 object-cover rounded-t-xl" />
-                    <div class="px-4 py-3 w-72">
-                        <span class="text-gray-400 mr-3 text-xs">author</span>
-                        <p class="text-xl font-bold text-black truncate block capitalize">Book Name</p>
-                        <p class="text-sm text-black">published</p>
-                        <div class="flex items-center">
-                            <p class="text-md my-3">149 Page</p>
-                            <div class="ml-auto"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                    fill="currentColor" class="bi bi-bag-plus" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd"
-                                        d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5z" />
-                                    <path
-                                        d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
-                                </svg></div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
-                <a href="#">
-                    <img src="image/pyschologyofmoney.jpg"
-                        alt="Product" class="h-60 w-72 object-cover rounded-t-xl" />
-                    <div class="px-4 py-3 w-72">
-                        <span class="text-gray-400 mr-3 text-xs">author</span>
-                        <p class="text-xl font-bold text-black truncate block capitalize">Book Name</p>
-                        <p class="text-sm text-black">published</p>
-                        <div class="flex items-center">
-                            <p class="text-md my-3">149 Page</p>
-                            <div class="ml-auto"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                    fill="currentColor" class="bi bi-bag-plus" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd"
-                                        d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5z" />
-                                    <path
-                                        d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
-                                </svg></div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
-                <a href="#">
-                    <img src="image/pyschologyofmoney.jpg"
-                        alt="Product" class="h-60 w-72 object-cover rounded-t-xl" />
-                    <div class="px-4 py-3 w-72">
-                        <span class="text-gray-400 mr-3 text-xs">author</span>
-                        <p class="text-xl font-bold text-black truncate block capitalize">Book Name</p>
-                        <p class="text-sm text-black">published</p>
-                        <div class="flex items-center">
-                            <p class="text-md my-3">149 Page</p>
-                            <div class="ml-auto"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                    fill="currentColor" class="bi bi-bag-plus" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd"
-                                        d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5z" />
-                                    <path
-                                        d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
-                                </svg></div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
-                <a href="#">
-                    <img src="image/pyschologyofmoney.jpg"
-                        alt="Product" class="h-60 w-72 object-cover rounded-t-xl" />
-                    <div class="px-4 py-3 w-72">
-                        <span class="text-gray-400 mr-3 text-xs">author</span>
-                        <p class="text-xl font-bold text-black truncate block capitalize">Book Name</p>
-                        <p class="text-sm text-black">published</p>
-                        <div class="flex items-center">
-                            <p class="text-md my-3">149 Page</p>
-                            <div class="ml-auto"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                    fill="currentColor" class="bi bi-bag-plus" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd"
-                                        d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5z" />
-                                    <path
-                                        d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
-                                </svg></div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
-                <a href="#">
-                    <img src="image/pyschologyofmoney.jpg"
-                        alt="Product" class="h-60 w-72 object-cover rounded-t-xl" />
-                    <div class="px-4 py-3 w-72">
-                        <span class="text-gray-400 mr-3 text-xs">author</span>
-                        <p class="text-xl font-bold text-black truncate block capitalize">Book Name</p>
-                        <p class="text-sm text-black">published</p>
-                        <div class="flex items-center">
-                            <p class="text-md my-3">149 Page</p>
-                            <div class="ml-auto"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                    fill="currentColor" class="bi bi-bag-plus" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd"
-                                        d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5z" />
-                                    <path
-                                        d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
-                                </svg></div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
-                <a href="#">
-                    <img src="image/pyschologyofmoney.jpg"
-                        alt="Product" class="h-60 w-72 object-cover rounded-t-xl" />
-                    <div class="px-4 py-3 w-72">
-                        <span class="text-gray-400 mr-3 text-xs">author</span>
-                        <p class="text-xl font-bold text-black truncate block capitalize">Book Name</p>
-                        <p class="text-sm text-black">published</p>
-                        <div class="flex items-center">
-                            <p class="text-md my-3">149 Page</p>
-                            <div class="ml-auto"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                    fill="currentColor" class="bi bi-bag-plus" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd"
-                                        d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5z" />
-                                    <path
-                                        d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
-                                </svg></div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
-                <a href="#">
-                    <img src="image/pyschologyofmoney.jpg"
-                        alt="Product" class="h-60 w-72 object-cover rounded-t-xl" />
-                    <div class="px-4 py-3 w-72">
-                        <span class="text-gray-400 mr-3 text-xs">author</span>
-                        <p class="text-xl font-bold text-black truncate block capitalize">Book Name</p>
-                        <p class="text-sm text-black">published</p>
-                        <div class="flex items-center">
-                            <p class="text-md my-3">149 Page</p>
-                            <div class="ml-auto"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                    fill="currentColor" class="bi bi-bag-plus" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd"
-                                        d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5z" />
-                                    <path
-                                        d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
-                                </svg></div>
-                        </div>
-                    </div>
-                </a>
-            </div>
         </section>
 
     </div>

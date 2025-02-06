@@ -1,13 +1,13 @@
 Front End :
 - cari tampilan form []
-- dropdown user logout []
-- dropdown user tambahin list ketika < md []
-- card kalau bisa diperkecil dan didempetin []
+- dropdown user logout [1/2] !kurang benul!
+- dropdown user tambahin list ketika < md [v]
+- card kalau bisa diperkecil dan didempetin [v]
 - card style ada tombol detail dan delete []
 - didalam detail ada update dan delete []
 
 Back End
-- koneksiin ke database mysql []
-- bikin authentikasi dlu kek login -> session -> logout []
+- koneksiin ke database mysql [v]
+- bikin authentikasi dlu kek login -> session -> logout [v]
 - bikin crud nya []
 *bikin langsung di file.php nya gausa dipisah dah
