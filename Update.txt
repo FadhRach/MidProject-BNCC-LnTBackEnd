@@ -10,4 +10,3 @@ Back End
 - koneksiin ke database mysql [v]
 - bikin authentikasi dlu kek login -> session -> logout [v]
 - bikin crud nya []
-*bikin langsung di file.php nya gausa dipisah dah
