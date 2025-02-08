@@ -5,7 +5,7 @@ $password   ="";
 $database   ="midproj_lnt_backend";
 
 $konek=mysqli_connect($server, $user, $password, $database);
-if($konek==false){
-    die("connection database error");
+if(!$konek){
+    die("connection database error: ".mysqli_connect_error());
 }
 ?>

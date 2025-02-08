@@ -4,6 +4,8 @@
     if(!isset($_SESSION['user'])) {
         header('location:login.php');
     }
+
+    include "backend/koneksi.php";
 ?>
 
 <!DOCTYPE html>
@@ -13,18 +15,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book Management | LNT BackEnd</title>
-    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 
 <body>
-    <div class="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
+    <div class="min-h-screen w-full bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
         <!-- Navbar -->
         <header class="fixed inset-x-0 top-0 z-30 mx-auto w-full max-w-screen-md border border-gray-100 bg-white/80 py-3 shadow backdrop-blur-lg md:top-3 md:rounded-3xl lg:max-w-screen-xl">
             <div class="px-4">
                 <div class="flex items-center justify-between">
                     <div class="flex shrink-0">
                         <a aria-current="page" class="flex items-center" href="dashboard.php">
-                            <svg class="w-6 h-6 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-6 h-6 text-blue-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                                 <path fill-rule="evenodd" d="M6 2a2 2 0 0 0-2 2v15a3 3 0 0 0 3 3h12a1 1 0 1 0 0-2h-2v-2h2a1 1 0 0 0 1-1V4a2 2 0 0 0-2-2h-8v16h5v2H7a1 1 0 1 1 0-2h1V2H6Z" clip-rule="evenodd"/>
                             </svg>                              
                             <p class="text-black font-semibold ml-1">Book</p>
@@ -32,8 +34,8 @@
                     </div>
 
                     <div class="hidden md:flex md:items-center md:gap-5">
-                        <a href="dashboard.php" class="text-sm font-medium text-gray-900 hover:bg-gray-100 px-2 py-1 rounded-lg">Main menu</a>
-                        <a href="#" class="text-sm font-medium text-gray-900 hover:bg-gray-100 px-2 py-1 rounded-lg">Create book list</a>
+                        <a href="dashboard.php" class="text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-blue-500 px-2 py-1 rounded-lg">Main menu</a>
+                        <a href="book_create.php" class="text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-blue-500 px-2 py-1 rounded-lg">Create book list</a>
                     </div>
 
                     <div class="flex items-center gap-3">
@@ -43,7 +45,7 @@
                             </svg>
                         </button>
 
-                        <button id="userMenuButton" class="flex items-center justify-center rounded-xl bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 cursor-pointer">
+                        <button id="userMenuButton" class="flex items-center justify-center rounded-xl bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-400 hover:shadow  cursor-pointer">
                             <?php echo $_SESSION['user']['username'] ?>
                         </button>
                     </div>
@@ -54,7 +56,7 @@
             <div id="mobileMenu" class="hidden absolute inset-x-0 top-full bg-white border-b border-gray-100 shadow-md transition-all duration-300 ease-out">
                 <div class="px-4 py-2">
                     <a href="dashboard.php" class="block py-2 px-2 text-sm text-gray-900 hover:bg-gray-100 rounded-lg">Main menu</a>
-                    <a href="#" class="block py-2 px-2 text-sm text-gray-900 hover:bg-gray-100 rounded-lg">Create book list</a>
+                    <a href="book_create.php" class="block py-2 px-2 text-sm text-gray-900 hover:bg-gray-100 rounded-lg">Create book list</a>
                 </div>
             </div>
 
@@ -67,24 +69,82 @@
         </header>
 
 
-        <div class="max-w-screen-md md:rounded-3xl lg:max-w-screen-xl w-full text-center p-10 bg-white shadow-md rounded-xl mx-auto">
-            <h1 class="font-bold text-4xl mb-4">Book Management</h1>
-            <h1 class="text-lg">Mid Project LnT Back End</h1>
+        <div class="max-w-screen-xl w-full flex flex-col mx-auto bg-white rounded-xl">
+            <div class="overflow-x-auto">
+                <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+                    <div class="overflow-hidden">
+                        <table class="min-w-full">
+                            <thead class="border-b border-gray-100">
+                                <tr>
+                                    <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">ID Buku</th>
+                                    <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Image</th>
+                                    <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Judul Buku</th>
+                                    <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Author</th>
+                                    <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Publisher</th>
+                                    <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Page</th>
+                                    <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                    $resultt = mysqli_query($konek, "SELECT * FROM book ORDER BY id_book ASC");
+
+                                    if(!$resultt){
+                                        die("Query Error : ".mysqli_errno($konek)." - ".mysqli_error($konek));
+                                    }
+
+                                    while ($row = mysqli_fetch_assoc($resultt)) {
+                                ?>
+                                <tr class="">
+                                    <td class="px-6 py-4 text-sm font-medium text-gray-900"><?php echo $row['id_book'] ?></td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <img class="h-20 w-20 rounded-xl" src="image/<?php echo $row['image'] ?>" alt="">
+                                        </div>
+                                    </td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"><?php echo $row['name'] ?></td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"><?php echo $row['author'] ?></td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"><?php echo $row['publisher'] ?></td>
+                                    <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"><?php echo $row['number_of_page'] ?></td>
+                                    <td class="text-sm text-gray-900 font-medium px-6 py-4 whitespace-nowrap">
+                                        <a href="book_detail.php?id=<?php echo $row['id_book'] ?>" class="text-blue-600 hover:text-blue-800">View</a>
+                                        <a href="book_edit.php?id=<?php echo $row['id_book'] ?>" class="ml-2 text-indigo-600 hover:text-indigo-800">Edit</a>
+                                        <a href="book_delete.php?id=<?php echo $row['id_book'] ?>" onclick="return confirm('Yakin menghapus data buku ini!')" class="ml-2 text-red-600 hover:text-red-800">Delete</a>
+                                    </td>
+                                </tr>
+                                <?php
+                                    }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <section class="max-w-screen-xl mx-auto grid grid-cols-1 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-10 gap-x-10 mt-10 mb-5">
 
+        <!-- CARD VIEW -->
+        <section class="max-w-screen-xl mx-auto grid grid-cols-1 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-10 gap-x-10 mt-10 mb-5">
             <!-- card -->
+            <?php
+                $resultc = mysqli_query($konek, "SELECT * FROM book ORDER BY id_book ASC");
+
+                if(!$resultc){
+                    die("Query Error : ".mysqli_errno($konek)." - ".mysqli_error($konek));
+                }
+
+                 while ($row = mysqli_fetch_assoc($resultc)) {
+            ?>
             <div class="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
                 <a href="#">
-                    <img src="image/pyschologyofmoney.jpg"
+                    <img src="image/<?php echo $row['image'] ?>"
                         alt="Product" class="h-60 w-72 object-cover rounded-t-xl" />
                     <div class="px-4 py-3 w-72">
-                        <span class="text-gray-400 mr-3 text-xs">author</span>
-                        <p class="text-xl font-bold text-black truncate block capitalize">Book Name</p>
-                        <p class="text-sm text-black">published</p>
+                        <span class="text-gray-400 mr-3 text-xs"><?php echo $row['author'] ?></span>
+                        <p class="text-xl font-bold text-black truncate block capitalize"><?php echo $row['name'] ?></p>
+                        <p class="text-sm text-black"><?php echo $row['publisher'] ?></p>
                         <div class="flex items-center">
-                            <p class="text-md my-3">149 Page</p>
+                            <p class="text-md my-3"><?php echo $row['number_of_page'] ?> Page</p>
                             <div class="ml-auto"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                     fill="currentColor" class="bi bi-bag-plus" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd"
@@ -96,7 +156,7 @@
                     </div>
                 </a>
             </div>
-
+            <?php } ?>
         </section>
 
     </div>
