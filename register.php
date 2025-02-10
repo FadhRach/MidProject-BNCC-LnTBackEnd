@@ -1,6 +1,5 @@
 <?php
   session_start();
-  include "backend/koneksi.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,20 +16,7 @@
             class="absolute inset-0 bg-gradient-to-r from-cyan-400 to-sky-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl">
           </div>
           <div class="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
-            <?php
-              if(isset($_POST['username'])){
-                $username = $_POST['username'];
-                $password = md5($_POST['password']);
-
-                $query = mysqli_query($konek, "INSERT INTO user(username, password) VALUES('$username','$password')");
-                if($query){
-                  echo '<script>alert("Selamat, anda berhasil melakukan registrasi!")</script>';
-                }else{
-                  echo '<script>alert("Registrasi Gagal!")</script>';
-                }
-              }
-            ?>
-            <form action="register.php" method="post">
+            <form action="backend/registeraction.php" method="post">
               <div class="max-w-md mx-auto">
                 <div>
                   <h1 class="text-2xl font-semibold">Register</h1>

@@ -1,6 +1,5 @@
 <?php
   session_start();
-  include "backend/koneksi.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,23 +16,7 @@
             class="absolute inset-0 bg-gradient-to-r from-cyan-400 to-sky-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl">
           </div>
           <div class="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
-            <?php
-              if(isset($_POST['username'])) {
-                $username = $_POST['username'];
-                $password = md5($_POST['password']);
-
-                $query = mysqli_query($konek, "SELECT * FROM user WHERE username='$username' and password='$password' ");
-
-                if(mysqli_num_rows($query) > 0){
-                  $data = mysqli_fetch_array($query);
-                  $_SESSION['user'] = $data;
-                  echo '<script>alert("Selamat Datang, '.$data['username'].'"); location.href="dashboard.php";</script>';
-                } else {
-                  echo '<script>alert("Username/Password tidak sesuai"); location.href="dashboard.php";</script>';
-                }
-              }
-            ?>
-            <form action="login.php" method="post">
+            <form action="backend/loginaction.php" method="post">
             <div class="max-w-md mx-auto">
               <div>
                 <h1 class="text-2xl font-semibold">Login</h1>
